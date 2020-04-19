@@ -62,10 +62,28 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/jinzhu/gorm"
+  packages = [".","dialects/postgres"]
+  revision = "79a77d771dee4e4b60e9c543e8663bbc80466670"
+  version = "v1.9.12"
+
+[[projects]]
+  name = "github.com/jinzhu/inflection"
+  packages = ["."]
+  revision = "f5c5f50e6090ae76a29240b61ae2a90dd810112e"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/klauspost/compress"
   packages = ["fse","huff0","snappy","zstd","zstd/internal/xxhash"]
   revision = "e2d2089232ece4911272106ae65a7a06746ea38a"
   version = "v1.10.4"
+
+[[projects]]
+  name = "github.com/lib/pq"
+  packages = [".","hstore","oid","scram"]
+  revision = "99274577be97ac9b1d95a2d61d566dc9b7cc6a54"
+  version = "v1.3.0"
 
 [[projects]]
   name = "github.com/lovoo/goka"
@@ -154,6 +172,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "cc94309b0a2007bdc812a856a47d91bb8fb80b91fc875e81f6350702879534b5"
+  inputs-digest = "b43ba978be9a63d0b96ff891bc3ed1941ad8b42292688d7028db8531d705634b"
   solver-name = "gps-cdcl"
   solver-version = 1
