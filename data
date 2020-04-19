@@ -1,0 +1,90 @@
+ How can I grant public read access to some objects in my Amazon S3 bucket?
+Last updated: 2020-03-27
+I want some objects in my Amazon Simple Storage Service (Amazon S3) bucket to be publicly readable. However, I don't want to change the permissions on other objects that are in the same bucket. How can I do that?
+Short Description
+Enable public read access in one of these ways:
+    Update the object's access control list (ACL) using the Amazon S3 console
+    Update the object's ACL using the AWS Command Line Interface (AWS CLI)
+    Use a bucket policy that grants public read access to a specific object tag
+    Use a bucket policy that grants public read access to a specific prefix
+Resolution
+Important: Before you begin, confirm that you don't have any block public access settings at the account level or the bucket level that prevent you from making the objects public. By default, block public access settings are set to True on new S3 buckets.
+Update the object's ACL using the Amazon S3 console
+To make several objects public at once, follow these steps:
+Warning: After you make several objects public, there's no option to undo this action for several objects at once. To remove public access, you must go into each object in the Amazon S3 console, and then from the Permissions tab of the object, modify Public access. You must do this for every object where you want to undo the public access that you granted. Be sure to carefully review the list of objects before you make them public.
+    Open the Amazon S3 console.
+    From the list of buckets, choose the bucket with the objects that you want to update.
+    Navigate to the folder that contains the objects.
+    From the object list, select all the objects that you want to make public.
+    Choose Actions, and then choose Make public.
+    In the Make public dialog box, confirm that the list of objects is correct.
+    Choose Make public.
+To make an individual object public, follow these steps:
+    From the Amazon S3 console, choose the bucket with the object that you want to update.
+    Navigate to the folder that contains the object.
+    Open the object by choosing the link on the object name.
+    Choose the Permissions tab.
+    Under Public access, choose Everyone.
+    In the Everyone dialog box, for Access to the object, select Read object.
+    Choose Save.
+Update the object's ACL using the AWS CLI
+For an object that you've already stored in Amazon S3, you can run this command to update its ACL for public read access:
+aws s3api put-object-acl --bucket awsexamplebucket --key exampleobject --acl public-read
+Or, you can run this command to grant full control of the object to the AWS account owner, and read access to everyone else:
+Note: For the value of --grant-full-control, enter the account's canonical user ID.
+aws s3api put-object-acl --bucket awsexamplebucket --key exampleobject --grant-full-control id="008exampleA45666666668889999008853" --grant-read uri=http://acs.amazonaws.com/groups/global/AllUsers
+Use a bucket policy that grants public read access to a specific object tag
+Important: Before you begin, be sure to review the pricing for S3 Object Tagging.
+First, add a bucket policy that allows public read access to any objects with a specific tag. For example, this policy allows public read access for any object that's tagged with the key-value pair public=yes:
+Then, add the tag to the objects that you want to be publicly readable. You can add object tags by using the Amazon S3 console. Or, you can use the AWS CLI.
+To check if an object has any existing tags, run this AWS CLI command:
+aws s3api get-object-tagging --bucket awsexamplebucket --key exampleobject
+To add a tag to an object that doesn't have any existing tags, run this command:
+Warning: This command overwrites any existing object tags.
+aws s3api put-object-tagging --bucket awsexamplebucket --key exampleobject --tagging 'TagSet={Key=public,Value=yes}'
+To add a tag to an object that has existing tags, run the following command. Be sure to include the new object tag, as well as the existing tags that you want to keep.
+aws s3api put-object-tagging --bucket awsexamplebucket --key exampleobject --tagging 'TagSet=[{Key=public,Value=n},{Key=exampletag1,Value=one},{Key=exampletag2,Value=two}]'
+After you add the object tag, run this command to review the tags of all the objects:
+aws s3api get-object-tagging --bucket awsexamplebucket --key exampleobject
+Use a bucket policy that grants public read access to a specific prefix
+To grant public read access to a specific object prefix, add a bucket policy similar to the following:
+Then, copy the objects into the prefix with public read access. You can copy an object into the prefix by running a command similar to the following:
+aws s3 cp s3://awsexamplebucket/exampleobject s3://awsexamplebucket/publicprefix/exampleobject
+Related Information
+How Do I Set Permissions on an Object?
+Did this article help you?
+Anything we could improve?
+Need more help?
+Learn About AWS
+    What Is AWS?
+    What Is Cloud Computing?
+    What Is DevOps?
+    What Is a Container?
+    What Is a Data Lake?
+    AWS Cloud Security
+    What's New
+    Blogs
+    Press Releases
+Resources for AWS
+    Getting Started
+    Training and Certification
+    AWS Solutions Portfolio
+    Architecture Center
+    Product and Technical FAQs
+    Analyst Reports
+    AWS Partner Network
+Developers on AWS
+    Developer Center
+    SDKs & Tools
+    .NET on AWS
+    Python on AWS
+    Java on AWS
+    PHP on AWS
+    Javascript on AWS
+Help
+    Contact Us
+    AWS Careers
+    File a Support Ticket
+    Knowledge Center
+    AWS Support Overview
+    Legal

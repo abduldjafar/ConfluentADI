@@ -1,0 +1,125 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/lovoo/goka"
+	"github.com/lovoo/goka/codec"
+	"log"
+)
+
+var (
+	brokers             = []string{"localhost:9092"}
+	topic   goka.Stream = "UjiCoba"
+	group   goka.Group  = "hasil-group"
+)
+type user struct {
+	Word string
+	Jumlah int
+}
+
+type datax struct {}
+
+func unique(intSlice []user) []user {
+	keys := make(map[user]bool)
+	list := []user{}
+	for _, entry := range intSlice {
+		if _, value := keys[entry]; !value {
+			keys[entry] = true
+			list = append(list, entry)
+		}
+	}
+	return list
+}
+
+func (d *datax) Encode(value interface{}) (data []byte, err error) {
+	if _, isUser := value.(*[]user); !isUser {
+		return nil, fmt.Errorf("Codec requires value *user, got %T", value)
+	}
+	return json.Marshal(value)
+}
+
+func (d *datax) Decode(data []byte) (value interface{}, err error) {
+	var (
+		c []user
+		_ error
+	)
+	err = json.Unmarshal(data, &c)
+	if err != nil {
+		return nil, fmt.Errorf("Error unmarshaling user: %v", err)
+	}
+	return &c, nil
+}
+
+
+// emits a single message and leave
+// process messages until ctrl-c is pressed
+func runEmitter() {
+	emitter, err := goka.NewEmitter(brokers, topic, new(codec.String))
+	if err != nil {
+		log.Fatalf("error creating emitter: %v", err)
+	}
+	defer emitter.Finish()
+	err = emitter.EmitSync("some-key", "some-value")
+	if err != nil {
+		log.Fatalf("error emitting message: %v", err)
+	}
+	fmt.Println("message emitted")
+}
+
+func runProcessor() {
+	// process callback is invoked for each message delivered from
+	// "example-stream" topic.
+	var datas []user
+	var datatemp *[]user
+	var datad user
+
+	cb := func(ctx goka.Context, msg interface{}) {
+		fmt.Println(ctx.Value())
+		if val := ctx.Value(); val != nil {
+			datatemp = ctx.Value().(*[]user)
+			freq := make(map[string]int)
+
+			for _, wCount := range *datatemp {
+				freq[wCount.Word] += wCount.Jumlah
+				wCount.Jumlah = freq[wCount.Word]
+			}
+
+			for index,word := range freq {
+				datad.Word = index
+				datad.Jumlah = word
+				datas = append(datas, datad)
+			}
+			//unique(datas)
+			ctx.SetValue(&datas)
+		}
+
+
+
+		//log.Printf("key = %s, counter = %v, msg = %v", ctx.Key(), counter, msg)
+	}
+
+	// Define a new processor group. The group defines all inputs, outputs, and
+	// serialization formats. The group-table topic is "example-group-table".
+	fmt.Println(new(codec.String))
+	g := goka.DefineGroup(group,
+		goka.Input(topic, new(codec.String), cb),
+		goka.Persist(new(datax)),
+	)
+
+	p, err := goka.NewProcessor(brokers, g)
+	if err != nil {
+		log.Fatalf("error creating processor: %v", err)
+	}
+	ctxs := context.Background()
+
+	r := p.Run(ctxs)
+	fmt.Println(r.Error())
+
+}
+
+func main() { // emits one message and stops
+	runEmitter()
+	runProcessor() // press ctrl-c to stop
+}
