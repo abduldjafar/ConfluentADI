@@ -31,8 +31,8 @@ func main() {
 	}()
 
 	// Produce messages to topic (asynchronously)
-	topic := "xxxx3"
-	data,err := os.Open("data")
+	topic := "xxxx6"
+	data, err := os.Open("data")
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -45,7 +45,6 @@ func main() {
 			}, nil)
 		}
 	}
-
 
 	// Wait for message deliveries before shutting down
 	p.Flush(15 * 100000)

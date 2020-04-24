@@ -14,6 +14,18 @@
   version = "v1.26.1"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/alecthomas/template"
+  packages = [".","parse"]
+  revision = "fb15b899a75114aa79cc930e33c46b577cc664b1"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/alecthomas/units"
+  packages = ["."]
+  revision = "f65c72e2690dc4b403c8bd637baf4611cd4c069b"
+
+[[projects]]
   name = "github.com/bsm/sarama-cluster"
   packages = ["."]
   revision = "c618e605e15c0d7535f6c96ff8efbb0dba4fd66c"
@@ -42,6 +54,18 @@
   packages = ["."]
   revision = "44cc805cf13205b55f69e14bcb69867d1ae92f98"
   version = "v1.1.0"
+
+[[projects]]
+  name = "github.com/fogleman/gg"
+  packages = ["."]
+  revision = "0403632d5b905943a1c2a5b2763aaecd568467ec"
+  version = "v1.3.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/golang/freetype"
+  packages = ["raster","truetype"]
+  revision = "e2365dfdc4a05e4b8299a783240d4a7d5a65d4e4"
 
 [[projects]]
   name = "github.com/golang/snappy"
@@ -129,6 +153,12 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/image"
+  packages = ["draw","font","font/basicfont","font/plan9font","math/f64","math/fixed"]
+  revision = "58c23975cae11f062d4b3b0c143fe248faac195d"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/net"
   packages = ["internal/socks","proxy"]
   revision = "d3edc9973b7eb1fb302b0ff2c62357091cea9a30"
@@ -138,6 +168,12 @@
   name = "golang.org/x/sync"
   packages = ["errgroup"]
   revision = "43a5402ce75a95522677f77c619865d66b8c57ab"
+
+[[projects]]
+  name = "gopkg.in/alecthomas/kingpin.v2"
+  packages = ["."]
+  revision = "947dcec5ba9c011838740e680966fd7087a71d0d"
+  version = "v2.2.6"
 
 [[projects]]
   name = "gopkg.in/confluentinc/confluent-kafka-go.v1"
@@ -172,6 +208,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b43ba978be9a63d0b96ff891bc3ed1941ad8b42292688d7028db8531d705634b"
+  inputs-digest = "568ad83c13410af9a990f504e6b98f6050601f4bbe39b608a03cb2f3c7c80a5a"
   solver-name = "gps-cdcl"
   solver-version = 1

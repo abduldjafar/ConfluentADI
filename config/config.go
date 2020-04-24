@@ -7,12 +7,21 @@ import (
 )
 
 type Configuration struct {
-	Kafka kafka
+	Kafka    kafka
+	Postgres postgres
 }
 
 type kafka struct {
 	Bootstrap string
 	Port      string
+}
+
+type postgres struct {
+	User     string
+	Password string
+	Db       string
+	Port     string
+	Url      string
 }
 
 func GetConfig(baseConfig *Configuration) {
