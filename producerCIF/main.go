@@ -20,9 +20,10 @@ func main() {
 	datakind := flag.String("datakind", "cif", "jenis data yang akan di produce")
 	key := flag.String("openkey", "", "key yang digunakan untuk mengambil data location")
 	listtempat := flag.String("listTempat", "stasiun", "file list tempat untuk opencage")
+	host := flag.String("host", "localhost", "host for kafka")
 	flag.Parse()
 
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost"})
+	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": *host})
 	if err != nil {
 		panic(err)
 	}

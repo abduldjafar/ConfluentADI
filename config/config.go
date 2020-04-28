@@ -14,6 +14,8 @@ type Configuration struct {
 type kafka struct {
 	Bootstrap string
 	Port      string
+	Topic     string
+	Gtopic    string
 }
 
 type postgres struct {

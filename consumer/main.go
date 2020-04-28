@@ -26,7 +26,7 @@ func main() {
 		panic(err)
 	}
 
-	c.SubscribeTopics([]string{"testopencage", "^aRegex.*[Tt]opic"}, nil)
+	c.SubscribeTopics([]string{"abduls-group-table", "^aRegex.*[Tt]opic"}, nil)
 
 	for {
 		msg, err := c.ReadMessage(-1)

@@ -31,7 +31,7 @@ func main() {
 	}()
 
 	// Produce messages to topic (asynchronously)
-	topic := "xxxx6"
+	topic := "abduls"
 	data, err := os.Open("data")
 	if err != nil {
 		log.Println(err.Error())

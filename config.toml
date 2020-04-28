@@ -1,6 +1,8 @@
 [kafka]
-bootstap="localhost"
+bootstrap="localhost:9092"
 port="9092"
+topic="abduls"
+gtopic="abduls-group"
 
 [postgres]
 url="localhost"
