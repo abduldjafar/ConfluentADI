@@ -6,11 +6,6 @@ import (
 	"gopkg.in/confluentinc/confluent-kafka-go.v1/kafka"
 )
 
-type user struct {
-	Word   string
-	Jumlah int
-}
-
 func main() {
 
 	baseConfig := &config.Configuration{}
@@ -26,7 +21,7 @@ func main() {
 		panic(err)
 	}
 
-	c.SubscribeTopics([]string{"abduls-group-table", "^aRegex.*[Tt]opic"}, nil)
+	c.SubscribeTopics([]string{"tiploc-group-table", "^aRegex.*[Tt]opic"}, nil)
 
 	for {
 		msg, err := c.ReadMessage(-1)

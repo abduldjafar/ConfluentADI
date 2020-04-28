@@ -1,8 +1,8 @@
 [kafka]
 bootstrap="localhost:9092"
 port="9092"
-topic="abduls"
-gtopic="abduls-group"
+topic="tiploc"
+gtopic="tiploc-group"
 
 [postgres]
 url="localhost"

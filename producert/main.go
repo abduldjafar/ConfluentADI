@@ -31,8 +31,8 @@ func main() {
 	}()
 
 	// Produce messages to topic (asynchronously)
-	topic := "abduls"
-	data, err := os.Open("data")
+	topic := "tiploc"
+	data, err := os.Open("toc-full-1")
 	if err != nil {
 		log.Println(err.Error())
 	}

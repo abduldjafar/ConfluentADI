@@ -11,11 +11,11 @@ import (
 	"syscall"
 )
 
-var (
-	brokers             = []string{"localhost:9092"}
-	topic   goka.Stream = "abduls"
-	group   goka.Group  = "abduls-group"
-)
+func getconfig() *config.Configuration {
+	baseConfig := &config.Configuration{}
+	config.GetConfig(baseConfig)
+	return baseConfig
+}
 
 func process(proc *goka.Processor, err error) {
 	p := proc
@@ -38,12 +38,15 @@ func process(proc *goka.Processor, err error) {
 	<-done
 }
 
-func RunProcessorTest(streamProc func(ctx goka.Context, msg interface{})) {
-	baseConfig := &config.Configuration{}
-	config.GetConfig(baseConfig)
-
-	g := defineGroup.DefineGroupTest(goka.Group(baseConfig.Kafka.Gtopic), goka.Stream(baseConfig.Kafka.Topic), streamProc)
-	p, err := goka.NewProcessor([]string{baseConfig.Kafka.Bootstrap}, g)
+func RunProcessorOpenCage(streamProc func(ctx goka.Context, msg interface{})) {
+	g := defineGroup.DefineGroupOpenCage(goka.Group(getconfig().Kafka.Gtopic), goka.Stream(getconfig().Kafka.Topic), streamProc)
+	p, err := goka.NewProcessor([]string{getconfig().Kafka.Bootstrap}, g)
 	process(p, err)
 
+}
+
+func RunProcessorTiploc(streamProc func(ctx goka.Context, msg interface{})) {
+	g := defineGroup.DefineGroupTiploc(goka.Group(getconfig().Kafka.Gtopic), goka.Stream(getconfig().Kafka.Topic), streamProc)
+	p, err := goka.NewProcessor([]string{getconfig().Kafka.Bootstrap}, g)
+	process(p, err)
 }
