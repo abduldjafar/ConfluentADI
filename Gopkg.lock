@@ -62,6 +62,12 @@
   version = "v1.3.0"
 
 [[projects]]
+  name = "github.com/go-telegram-bot-api/telegram-bot-api"
+  packages = ["."]
+  revision = "9860bdfd3a171ceafb6e1eafa163482a6ef92643"
+  version = "v4.6.4"
+
+[[projects]]
   branch = "master"
   name = "github.com/golang/freetype"
   packages = ["raster","truetype"]
@@ -87,15 +93,9 @@
 
 [[projects]]
   name = "github.com/jinzhu/gorm"
-  packages = [".","dialects/postgres"]
+  packages = ["dialects/postgres"]
   revision = "79a77d771dee4e4b60e9c543e8663bbc80466670"
   version = "v1.9.12"
-
-[[projects]]
-  name = "github.com/jinzhu/inflection"
-  packages = ["."]
-  revision = "f5c5f50e6090ae76a29240b61ae2a90dd810112e"
-  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/klauspost/compress"
@@ -138,6 +138,12 @@
   packages = ["leveldb","leveldb/cache","leveldb/comparer","leveldb/errors","leveldb/filter","leveldb/iterator","leveldb/journal","leveldb/memdb","leveldb/opt","leveldb/storage","leveldb/table","leveldb/util"]
   revision = "9d007e481048296f09f59bd19bb7ae584563cd95"
   version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/technoweenie/multipartstreamer"
+  packages = ["."]
+  revision = "a90a01d73ae432e2611d178c18367fbaa13e0154"
+  version = "v1.0.1"
 
 [[projects]]
   branch = "master"
@@ -208,6 +214,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "568ad83c13410af9a990f504e6b98f6050601f4bbe39b608a03cb2f3c7c80a5a"
+  inputs-digest = "329e8c9b8958994473c838f0ffaff8e43926961957bda11b9daf52b2224ad0af"
   solver-name = "gps-cdcl"
   solver-version = 1

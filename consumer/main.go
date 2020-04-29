@@ -12,8 +12,8 @@ func main() {
 	config.GetConfig(baseConfig)
 
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": "localhost",
-		"group.id":          "myTopic-group",
+		"bootstrap.servers": "192.168.15.117",
+		"group.id":          "TRAINS_DELAYED_ALERT_TG-group",
 		"auto.offset.reset": "earliest",
 	})
 
@@ -21,7 +21,7 @@ func main() {
 		panic(err)
 	}
 
-	c.SubscribeTopics([]string{"tiploc-group-table", "^aRegex.*[Tt]opic"}, nil)
+	c.SubscribeTopics([]string{"tTRAINS_DELAYED_ALERT_TG", "^aRegex.*[Tt]opic"}, nil)
 
 	for {
 		msg, err := c.ReadMessage(-1)

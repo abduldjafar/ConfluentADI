@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"gopkg.in/confluentinc/confluent-kafka-go.v1/kafka"
 	"log"
@@ -9,7 +10,14 @@ import (
 )
 
 func main() {
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost"})
+
+	topic := flag.String("topic", "default", "kafka topic")
+	server := flag.String("server", "localhost", "kafka bootstrap server")
+	data := flag.String("data", "data.dat", "file that contain datas for produce to kafka")
+
+	flag.Parse()
+
+	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": *server})
 	if err != nil {
 		panic(err)
 	}
@@ -31,16 +39,15 @@ func main() {
 	}()
 
 	// Produce messages to topic (asynchronously)
-	topic := "tiploc"
-	data, err := os.Open("toc-full-1")
+	datas, err := os.Open(*data)
 	if err != nil {
 		log.Println(err.Error())
 	}
-	scanner := bufio.NewScanner(data)
+	scanner := bufio.NewScanner(datas)
 	for scanner.Scan() {
 		for _, word := range []string{scanner.Text()} {
 			p.Produce(&kafka.Message{
-				TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
+				TopicPartition: kafka.TopicPartition{Topic: topic, Partition: kafka.PartitionAny},
 				Value:          []byte(word),
 			}, nil)
 		}
